@@ -1,0 +1,8 @@
+typer
+python-dotenv
+pydantic-settings
+openai-agents
+build  # Python build frontend (and backend)
+sqlalchemy
+psycopg
+textual-dev

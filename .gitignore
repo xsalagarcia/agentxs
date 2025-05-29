@@ -1,0 +1,16 @@
+# IDE folder
+.idea
+
+# Virtual environment folder
+venv
+
+# Will ignore all python compiles bytecode files
+*.pyc
+__pycache__/
+
+
+agentxs/data_folder
+database.db
+.env
+
+TODOS.md

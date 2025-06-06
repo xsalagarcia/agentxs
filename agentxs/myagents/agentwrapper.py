@@ -3,7 +3,7 @@ from enum import StrEnum, Enum
 from pathlib import Path
 from typing import Any
 
-from agents import Agent, Runner
+from agents import Agent, Runner, AgentsException
 from openai import BadRequestError
 
 from agentxs.service import historical as historical_service
@@ -78,15 +78,15 @@ class AgentWrapper:
         self.__historical = []
         self.context = context
 
-    def ask_agent(self, input: str) -> Any:
+    async def ask_agent(self, input: str) -> Any:
 
         self.__historical.append({"role": "user", "content": input})
 
         try:
-            run_result = Runner.run_sync(starting_agent=self.agent,
-                                         input=self.__historical,
-                                         context=self.context)
-        except BadRequestError as e:
+            run_result = await Runner.run(starting_agent=self.agent,
+                                          input=self.__historical,
+                                          context=self.context)
+        except BadRequestError | AgentsException as e:
             return f"**{e.message}**"
 
         match self.agent_memory:

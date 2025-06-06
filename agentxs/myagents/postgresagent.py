@@ -20,6 +20,7 @@ class PostgresAgentWrapper(AgentWrapper):
         self.__port: int | None = None
         self.__database: str | None = None
         self.__host: str | None = None
+        self.__require_ssl_mode = False
 
     @property
     def username(self):
@@ -66,6 +67,14 @@ class PostgresAgentWrapper(AgentWrapper):
         self.__host = host
         self.__set_database_engine()
 
+    @property
+    def ssl_mode(self):
+        return self.__require_ssl_mode
+
+    @ssl_mode.setter
+    def ssl_mode(self, mode: bool):
+        self.__require_ssl_mode = mode
+
     def __set_database_engine(self):
         if self.username is None or self.password is None or self.port is None or self.database is None or self.host is None:
             return
@@ -74,11 +83,26 @@ class PostgresAgentWrapper(AgentWrapper):
             self.context.database_engine.dispose()
 
         self.context.database_engine = create_engine(
-            f"postgresql+psycopg://{self.username}:{self.password}@{self.host}:{self.port}/{self.database}")
+            f"postgresql+psycopg://{self.username}:{self.password}@{self.host}:{self.port}/{self.database}{'?sslmode=require' if self.__require_ssl_mode else ''}")
 
     @property
     def has_db_engine(self):
         return self.context is not None and self.context.database_engine is not None
+
+    def test_db_engine(self) -> bool:
+        """
+        Tests database engine.
+        :return: True if it works, otherwise, False.
+        """
+        if self.has_db_engine:
+            try:
+                with self.context.database_engine.connect() as connection:
+                    connection.execute(text("SELECT 1;"))
+                    return True
+            except Exception:
+                pass
+
+        return False
 
     def get_missing_connection_params(self) -> list[str]:
         missing_connection_params = list[str]()

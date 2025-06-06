@@ -1,6 +1,4 @@
-#!/home/xevi/Documents/Projectes/cli-llm/venv/bin/python
-import logging
-import re
+import asyncio
 from pathlib import Path
 
 import typer
@@ -47,7 +45,7 @@ def main(user_input: str = typer.Argument(help="Type your question", default="he
                 transient=True,
         ) as progress:
             progress.add_task(description="waiting for the agent...", total=None)
-            answer = python_agent.ask_agent(input=user_input)
+            answer = asyncio.run(python_agent.ask_agent(input=user_input))
         console.print(Markdown(answer))
 
         user_input = request_user_reply()
@@ -55,3 +53,6 @@ def main(user_input: str = typer.Argument(help="Type your question", default="he
 
 if __name__ == "__main__":
     typer.run(main)
+
+def run_typer():
+    main(user_input="help", project_path=None, thread_memory=AgentMemory.JUST_ANSWERS)

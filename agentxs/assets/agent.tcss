@@ -1,0 +1,115 @@
+    Screen {
+        layout: horizontal;
+    }
+
+    /* Left aside container */
+    #sidebar {
+        width: 30%;
+        max-width: 30;
+        border-right: solid $accent;
+        layout: vertical;
+    }
+
+    /* Main content area */
+    #main-content {
+        width: 70%;
+        layout: vertical;
+    }
+
+    /* Form components in sidebar */
+    .form-component {
+        height: auto;
+        margin: 1;
+    }
+
+    /* Scrollable content area */
+    .scrollable {
+        overflow-y: auto;
+    }
+
+    /* Bottom container with textarea and button */
+    #input-container {
+        height: auto;
+        border-top: solid $accent;
+        padding: 1;
+    }
+
+    /* Textarea styling */
+    TextArea {
+        height: auto;
+        max-height: 15;
+    }
+
+    /* Button styling */
+    Button {
+        width: 100%;
+    }
+
+    .dialog {
+
+
+        width: 100%;
+
+        &.user {
+            margin: 1 6 1 0;
+            border-title-align: left;
+            background: $secondary-background;
+            border: $secondary-background-lighten-3;
+        }
+        &.model {
+            margin: 1 0 1 6;
+            border-title-align: right;
+            background: $primary-background;
+            border: $primary-background-lighten-3;
+
+        }
+        &.system {
+            margin: 1 3 1 3;
+            border-title-align: center;
+            background: $panel;
+            border: $panel-lighten-3;
+        }
+    }
+
+    .bordered_option {
+        border: solid round dimgrey;
+        &.ok{
+            border: solid round green;
+        }
+        &.ko{
+            border: solid round red;
+        }
+
+    }
+
+    CommonOptions,
+    PythonOptions,
+    PostgreSQLOptions
+    {
+        height: auto;
+    }
+
+    .compact_modal {
+        align: center middle;
+        & .title {
+            color: $primary;
+        }
+        &>Vertical{
+            border: thick $background 80%;
+            background: $surface;
+            align: center middle;
+            height: auto;
+            width: 60;
+            & Horizontal {
+                height: auto;
+                align: center middle;
+                width: 100%;
+
+                    & Button {
+                        width: 1fr;
+                        margin: 1 1 0 1;
+                    }
+                }
+        }
+    }
+

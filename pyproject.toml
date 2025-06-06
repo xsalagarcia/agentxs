@@ -1,7 +1,11 @@
-[Project]
+[project]
 name = "agentxs"
 version = "0.0.0"
 
 [build-system]
 requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
+
+[project.scripts]
+agentxs = "agentxs.__main__:main"
+agentxs_cli = "agentxs.cli_agent_runner:main"

@@ -4,6 +4,9 @@
 # Virtual environment folder
 venv
 
+# Dev mode package install data.
+*.egg-info
+
 # Will ignore all python compiles bytecode files
 *.pyc
 __pycache__/
